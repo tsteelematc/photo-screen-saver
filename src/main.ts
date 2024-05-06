@@ -39,7 +39,7 @@ app.on("ready", () =>
       show: false,
       autoHideMenuBar: true,
       backgroundColor: "#000",
-      webPreferences: { preload: path.join(__dirname, "preload.js") },
+      webPreferences: { sandbox: false, preload: path.join(__dirname, "preload.js") },
    })
 
    // We have to delay the following operations for a few seconds, otherwise the page doesn't get

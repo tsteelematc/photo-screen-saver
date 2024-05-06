@@ -1,12 +1,12 @@
-import { useEffect, useReducer } from "react"
-import { Transition, TransitionGroup } from "react-transition-group"
 import classNames from "classnames"
-import { closeWindow, delay, getRandom, shuffle } from "./utils"
-import { Photo } from "./photo"
+import { useEffect, useReducer, useRef } from "react"
+import { Transition, TransitionGroup } from "react-transition-group"
 import { getFlickrPhotos } from "./flickrPhotos"
-import { getUnsplashPhotos } from "./unsplashPhotos"
 import { getLocalPhotos } from "./localPhotos"
+import { Photo } from "./photo"
 import styles from "./photoSlideshow.module.scss"
+import { getUnsplashPhotos } from "./unsplashPhotos"
+import { closeWindow, delay, getRandom, shuffle } from "./utils"
 
 // Choose the source for the photos you want to display:
 type GetPhotosFn = typeof getFlickrPhotos | typeof getUnsplashPhotos | typeof getLocalPhotos
@@ -21,6 +21,8 @@ const SECONDS = 1000
 export function PhotoSlideshow()
 {
    const [state, dispatch] = useReducer(reducer, initialState)
+
+   const nodeRef = useRef(null)
 
    useEffect(() =>
    {
@@ -80,8 +82,8 @@ export function PhotoSlideshow()
       <div className={styles.root}>
          {state.photoIdx >= 0 &&
             <TransitionGroup>
-               <Transition key={state.photoIdx} timeout={(FADE_IN_DURATION + 1) * SECONDS} appear={true}>
-                  <>
+               <Transition key={state.photoIdx} nodeRef={nodeRef} timeout={(FADE_IN_DURATION + 1) * SECONDS} appear={true}>
+                  <div ref={nodeRef}>
                      <div
                         className={classNames(styles.photo, { [styles.visible]: state.isImageLoaded })}
                         style={{ zIndex: state.zIndex, transformOrigin: `${state.origin.x}% ${state.origin.y}%` }}
@@ -99,7 +101,7 @@ export function PhotoSlideshow()
                      >
                         {getCaption(state.photos[state.photoIdx])}
                      </label>
-                  </>
+                  </div>
                </Transition>
             </TransitionGroup>
          }
