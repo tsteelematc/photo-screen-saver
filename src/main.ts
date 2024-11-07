@@ -28,8 +28,8 @@ app.on("ready", () =>
       || process.argv[1].match(/^\/c/))
       {
          dialog.showMessageBox({ message: `${process.argv[1]} This screen saver has no options that you can set.`, buttons: ["OK"] })
-         app.quit()
-         return
+         // app.quit()
+         // return
       }
 
       // dialog.showMessageBox({ message: process.argv.join("\n"), buttons: ["OK"] })
