@@ -1,4 +1,4 @@
-import { app, BrowserWindow, /* dialog */ } from "electron"
+import { app, BrowserWindow, dialog } from "electron"
 import path from "path"
 
 // When running in true screen saver mode, the Chromium GPU process crashes for some reason.
@@ -27,13 +27,22 @@ app.on("ready", () =>
       if((process.argv[1] === "/S")
       || process.argv[1].match(/^\/c/))
       {
-         // dialog.showMessageBox({ message: `${process.argv[1]} This screen saver has no options that you can set.`, buttons: ["OK"] })
+         // console.log("TJS - /S");
+         dialog.showMessageBoxSync({ 
+            message: `${process.argv[1]} This screen saver has no options that you can set.`
+            , buttons: ["OK"] 
+         })
          // app.quit()
          // return
       }
 
       // dialog.showMessageBox({ message: process.argv.join("\n"), buttons: ["OK"] })
    }
+
+   dialog.showMessageBoxSync({ 
+      message: "Temporary folder chooser here ! ! !"
+      , buttons: ["OK"] 
+   })
 
    const mainWindow = new BrowserWindow({
       show: false,

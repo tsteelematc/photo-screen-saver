@@ -7,6 +7,8 @@ import { Photo } from "./photo"
 import styles from "./photoSlideshow.module.scss"
 import { getUnsplashPhotos } from "./unsplashPhotos"
 import { closeWindow, delay, getRandom, shuffle } from "./utils"
+// import { dialog } from "electron"
+import copy from "copy-to-clipboard"
 
 // Choose the source for the photos you want to display:
 type GetPhotosFn = typeof getFlickrPhotos | typeof getUnsplashPhotos | typeof getLocalPhotos
@@ -18,8 +20,26 @@ const FADE_IN_DURATION = 4
 
 const SECONDS = 1000
 
-export function PhotoSlideshow()
+interface PhotoSlideshowProps {
+   folderPath: string
+}
+
+// export function PhotoSlideshow(
+//    {folderPath}
+// ): React.FC<PhotoSlideshowProps>
+
+export const PhotoSlideshow: React.FC<PhotoSlideshowProps> = (
+   {folderPath}
+) =>
 {
+   console.log(folderPath)
+
+   // dialog.showMessageBoxSync({
+   //    message: folderPath
+   // })
+
+   copy("here" + folderPath)
+
    const [state, dispatch] = useReducer(reducer, initialState)
 
    const nodeRef = useRef(null)
@@ -30,7 +50,9 @@ export function PhotoSlideshow()
       {
          try
          {
-            const photos = await GET_PHOTOS()
+            copy("here2" + folderPath)
+
+            const photos = await GET_PHOTOS(folderPath)
 
             if(photos.length === 0)
                throw new Error("No photos found that meet criteria.")
@@ -49,7 +71,7 @@ export function PhotoSlideshow()
 
       load()
    },
-   [])
+   [folderPath])
 
    useEffect(() =>
    {

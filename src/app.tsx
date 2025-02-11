@@ -50,7 +50,9 @@ export function App()
          onKeyDown={e => closeWindow()}
          onMouseMove={onMouseMove}
       >
-         <SHOW_COMPONENT/>
+         <SHOW_COMPONENT
+            folderPath="C:/Users/t-ste/Downloads/Bing Daily Pictures"
+         />
       </div>
    )
 }
