@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, /* useState */ } from "react"
 import { closeWindow } from "./utils"
 import { PhotoSlideshow } from "./photoSlideshow"
 import { DemoCanvas } from "./demoCanvas"
@@ -6,6 +6,7 @@ import { DemoCss } from "./demoCss"
 import { DemoShader } from "./demoShader"
 import { DemoThreeJs } from "./demoThreeJs"
 import styles from "./app.module.scss"
+// import localforage from "localforage"
 
 // Choose the component you want to display in the screen saver:
 type ShowComponent = typeof PhotoSlideshow | typeof DemoCanvas | typeof DemoCss | typeof DemoShader | typeof DemoThreeJs
@@ -13,9 +14,29 @@ const SHOW_COMPONENT: ShowComponent = PhotoSlideshow
 
 export function App()
 {
+   console.log(global.location.search)
+
    const refRoot = useRef<HTMLDivElement>(null)
    const refStartMousePos = useRef({ x: NaN, y: NaN })
 
+   // const [folder, setFolder] = useState<string>("")
+
+   // useEffect(
+   //    () => {
+   //       const loadFolder = async () => {
+   //          console.log("loadFolder")
+   //          await localforage.setItem("folder", "C:/Users/t-ste/Downloads/Bing Daily Pictures")
+   //          const folderPath = await localforage.getItem<string>("folder") ?? ""
+   //          console.log(
+   //             "useEffect"
+   //             , folderPath
+   //          )
+   //          setFolder(folderPath)
+   //       }
+
+   //       loadFolder()
+   //    }
+   // )
    useEffect(() =>
    {
       refRoot.current!.focus()
@@ -52,6 +73,7 @@ export function App()
       >
          <SHOW_COMPONENT
             folderPath="C:/Users/t-ste/Downloads/Bing Daily Pictures"
+            // folderPath={folder}
          />
       </div>
    )

@@ -1,5 +1,6 @@
 import { app, BrowserWindow, dialog } from "electron"
 import path from "path"
+// import localforage from "localforage"
 
 // When running in true screen saver mode, the Chromium GPU process crashes for some reason.
 // We work around this problem by specifying this flag to run the GPU thread in-process.
@@ -11,7 +12,7 @@ app.on("window-all-closed", () =>
    app.quit()
 })
 
-app.on("ready", () =>
+app.on("ready", async () =>
 {
    if(process.argv.length > 1)
    {
@@ -39,16 +40,23 @@ app.on("ready", () =>
       // dialog.showMessageBox({ message: process.argv.join("\n"), buttons: ["OK"] })
    }
 
-   dialog.showMessageBoxSync({ 
-      message: "Temporary folder chooser here ! ! !"
-      , buttons: ["OK"] 
+   const selectedFolder = dialog.showOpenDialogSync({
+      properties: ["openDirectory"]
    })
+   
+   if (selectedFolder) {
+      console.log(selectedFolder)
+      // await localforage.setItem("folder", selectedFolder)
+   } else {
+      console.log("User cancelled the selection.")
+      app.quit()
+   }   
 
    const mainWindow = new BrowserWindow({
       show: false,
       autoHideMenuBar: true,
       backgroundColor: "#000",
-      webPreferences: { sandbox: false, preload: path.join(__dirname, "preload.js") },
+      webPreferences: { sandbox: false, preload: path.join(__dirname, "preload.js"), additionalArguments: selectedFolder, nodeIntegration: true },
    })
 
    // We have to delay the following operations for a few seconds, otherwise the page doesn't get
