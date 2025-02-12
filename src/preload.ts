@@ -3,17 +3,17 @@ import { contextBridge } from "electron"
 // import { LOCAL_FOLDER_PATH } from "./constants"
 import { Photo } from "./photo"
 // import { dialog } from "electron"
-import copy from "copy-to-clipboard"
+// import copy from "copy-to-clipboard"
 
 contextBridge.exposeInMainWorld("api", { getLocalPhotos })
 
 function getLocalPhotos(
-   folderPath: string
+   // folderPath: string
 ): Photo[]
 {
 
-   copy("here-here")
-   copy(window.process.argv.join(", "))
+   // copy("here-here")
+   // copy(window.process.argv.join(", "))
 
    // console.log(window.process.argv)
    // console.log("here", folderPath)
@@ -22,6 +22,11 @@ function getLocalPhotos(
    //    message: `${folderPath}`
    //    , buttons: ["OK"] 
    // })
+
+   // additionalArguments are at the end ? ? ?
+   let folderPath = window.process.argv[window.process.argv.length - 2] 
+   // let folderPath = window.process.argv.join(", ")
+   // Ah, it's the second to last one, hmm... 
 
    // let folderPath = LOCAL_FOLDER_PATH
    if(!folderPath.endsWith("/"))
