@@ -41,7 +41,7 @@ module.exports = function (grunt) {
                dir: "build",
                out: "package",
                platform: "win32",
-               arch: "x64",
+               arch: "arm64",
                overwrite: true
             }
          }
