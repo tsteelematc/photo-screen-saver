@@ -6,7 +6,7 @@ import { getLocalPhotos } from "./localPhotos"
 import { Photo } from "./photo"
 import styles from "./photoSlideshow.module.scss"
 import { getUnsplashPhotos } from "./unsplashPhotos"
-import { closeWindow, delay, getRandom, shuffle } from "./utils"
+import { closeWindow, delay, getRandom, /* shuffle */ } from "./utils"
 
 // Choose the source for the photos you want to display:
 type GetPhotosFn = typeof getFlickrPhotos | typeof getUnsplashPhotos | typeof getLocalPhotos
@@ -37,7 +37,8 @@ export function PhotoSlideshow()
 
             console.log(`${photos.length} photos found that meet criteria`)
 
-            shuffle(photos)
+            //shuffle(photos)
+            photos.reverse()
             dispatch({ type: "load", photos })
          }
          catch(err: any)
