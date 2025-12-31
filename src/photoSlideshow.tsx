@@ -1,3 +1,6 @@
+// C:\Users\t-ste\Documents\GitHub\tolga-photo-screen-saver\package\photo-screen-saver-win32-arm64-reverse-chron\photo-screen-saver.exe
+// C:\Users\t-ste\Documents\GitHub\2025-winter-break\photo-screen-saver\package\photo-screen-saver-win32-arm64\photo-screen-saver.exe
+
 import classNames from "classnames"
 import { useEffect, useReducer, useRef } from "react"
 import { Transition, TransitionGroup } from "react-transition-group"
@@ -6,7 +9,7 @@ import { getLocalPhotos } from "./localPhotos"
 import { Photo } from "./photo"
 import styles from "./photoSlideshow.module.scss"
 import { getUnsplashPhotos } from "./unsplashPhotos"
-import { closeWindow, delay, getRandom, /* shuffle */ } from "./utils"
+import { closeWindow, delay, getRandom, shuffle } from "./utils"
 
 // Choose the source for the photos you want to display:
 type GetPhotosFn = typeof getFlickrPhotos | typeof getUnsplashPhotos | typeof getLocalPhotos
@@ -37,7 +40,7 @@ export function PhotoSlideshow()
 
             console.log(`${photos.length} photos found that meet criteria`)
 
-            //shuffle(photos)
+            shuffle(photos)
             photos.reverse()
             dispatch({ type: "load", photos })
          }
